@@ -1,14 +1,18 @@
 import graphviz
 
 with open("list_of_edges164.txt", 'r') as file:
-    edge = file.read().strip()
-edges = list(map(lambda x: (x.split()[0], x.split()[1]), edge.split('\n')))
-
-print(edges)
-
-g = graphviz.Graph()
-
-for i in edges:
-    g.edge(i[0], i[1])
-
-g.view()
+    graph = graphviz.Graph()
+    edges = []
+    for line in file:
+        vertices = line.split()
+        if len(vertices) == 2:
+            graph.edge(vertices[0],vertices[1])
+            edges.append(vertices)
+        elif len(vertices) == 1:
+            graph.node(vertices[0])
+            edges.append(vertices)
+        else:
+            print("Invalid input")
+            break
+    print(edges)
+graph.view()
